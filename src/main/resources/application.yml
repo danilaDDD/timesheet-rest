@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: timesheet-rest
+  datasource:
+    url: jdbc:postgresql://localhost:5432/timesheet_db
+    username: timesheet
+    password: float123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+
+
+server:
+  port: ${PORT:0}
