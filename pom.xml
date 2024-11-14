@@ -24,6 +24,7 @@
 	<modules>
 		<module>timesheet-rest</module>
         <module>logging-starter</module>
+        <module>recover-starter</module>
     </modules>
 	<scm>
 		<connection/>

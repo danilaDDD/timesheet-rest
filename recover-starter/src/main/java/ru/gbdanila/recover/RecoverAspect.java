@@ -1,5 +1,6 @@
-package ru.gbdanila.timesheetrest.aspect;
+package ru.gbdanila.recover;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -12,9 +13,11 @@ import java.lang.reflect.Method;
 @Slf4j
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class RecoverAspect {
+    private final RecoverConfigurationProperties properties;
 
-    @Around("@annotation(ru.gbdanila.timesheetrest.aspect.Recover)")
+    @Around("@annotation(ru.gbdanila.recover.Recover)")
     public Object recoverMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();

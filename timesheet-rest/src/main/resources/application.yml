@@ -17,3 +17,5 @@ application:
     level: info
     enabled: true
     print-args: true
+  recovering:
+    enabled: true

@@ -1,4 +1,4 @@
-package ru.gbdanila.timesheetrest.aspect;
+package ru.gbdanila.recover;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
