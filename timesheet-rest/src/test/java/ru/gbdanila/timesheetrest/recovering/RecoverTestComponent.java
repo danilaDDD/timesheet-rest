@@ -1,4 +1,4 @@
-package ru.gbdanila.timesheetrest.components;
+package ru.gbdanila.timesheetrest.recovering;
 
 import org.springframework.stereotype.Component;
 import ru.gbdanila.recover.Recover;
@@ -6,7 +6,7 @@ import ru.gbdanila.recover.Recover;
 @Component
 public class RecoverTestComponent{
     @Recover
-    public void throwMethod(){
+    public void throwIllegalArgumentException(){
         throw new IllegalArgumentException();
     }
 }
