@@ -12,3 +12,8 @@ spring:
 
 server:
   port: ${PORT:0}
+application:
+  logging:
+    level: info
+    enabled: true
+    print-args: true

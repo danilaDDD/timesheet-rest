@@ -1,6 +1,7 @@
 package ru.gbdanila.timesheetrest.service;
 
 import org.springframework.stereotype.Service;
+import ru.gbdanila.logging.Logging;
 import ru.gbdanila.timesheetrest.exceptions.EntityNotFoundException;
 import ru.gbdanila.timesheetrest.model.Project;
 import ru.gbdanila.timesheetrest.repository.ProjectRepository;
@@ -8,6 +9,7 @@ import ru.gbdanila.timesheetrest.repository.ProjectRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Logging
 @Service
 public class ProjectService implements CRUDService<Project> {
     private final ProjectRepository projectRepository;

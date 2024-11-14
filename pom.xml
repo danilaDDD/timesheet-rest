@@ -23,7 +23,8 @@
 	</developers>
 	<modules>
 		<module>timesheet-rest</module>
-	</modules>
+        <module>logging-starter</module>
+    </modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
