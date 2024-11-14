@@ -14,3 +14,10 @@ spring:
 
 server:
   port: ${PORT:0}
+
+application:
+  recovering:
+    enabled: true
+    no-recover-for:
+      - java.lang.IllegalArgumentException
+      - jdk.jshell.spi.ExecutionControl.NotImplementedException

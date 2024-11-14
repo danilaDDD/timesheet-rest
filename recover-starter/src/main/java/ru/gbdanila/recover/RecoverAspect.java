@@ -9,6 +9,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Aspect
@@ -24,13 +28,13 @@ public class RecoverAspect {
 
         if(method.isAnnotationPresent(Recover.class)){
             Recover recover = method.getAnnotation(Recover.class);
-            Class<? extends Throwable>[] noRecoverFor = recover.noRecoverFor();
+            Set<Class<? extends Throwable>> noRecoverForSet = getNoRecoverFor(recover, properties);
 
             if(method.getReturnType().getName().equals("void")) {
                 try{
                     joinPoint.proceed();
                 }catch (Throwable e){
-                    throwNoRecoverExceptionsIfNeed(e, noRecoverFor);
+                    throwNoRecoverExceptionsIfNeed(e, noRecoverForSet);
                     logException(e, method);
                 }
 
@@ -38,7 +42,7 @@ public class RecoverAspect {
                 try {
                     return joinPoint.proceed();
                 } catch (Throwable e) {
-                    throwNoRecoverExceptionsIfNeed(e, noRecoverFor);
+                    throwNoRecoverExceptionsIfNeed(e, noRecoverForSet);
                     logException(e, method);
                     return getDefault(method);
                 }
@@ -51,7 +55,18 @@ public class RecoverAspect {
         return null;
     }
 
-    private void throwNoRecoverExceptionsIfNeed(Throwable th,  Class<? extends Throwable>[] noRecoverFor) throws Throwable {
+    private Set<Class<? extends Throwable>> getNoRecoverFor(Recover recover, RecoverConfigurationProperties properties) {
+        Set<Class<? extends Throwable>> throwables = Arrays.stream(recover.noRecoverFor())
+                .collect(Collectors.toSet());
+
+        Class<? extends Throwable>[] propertiesNoRecoverFor = properties.getNoRecoverFor();
+        if(propertiesNoRecoverFor != null)
+            throwables.addAll(Arrays.asList(properties.getNoRecoverFor()));
+
+        return throwables;
+    }
+
+    private void throwNoRecoverExceptionsIfNeed(Throwable th,  Set<Class<? extends Throwable>> noRecoverFor) throws Throwable {
         Class<? extends Throwable> throwClass = th.getClass();
         for(var noRecoverClazz: noRecoverFor){
             if(noRecoverClazz.isAssignableFrom(throwClass)){
